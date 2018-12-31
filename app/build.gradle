@@ -12,7 +12,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,10 +23,19 @@ android {
 }
 
 dependencies {
+    //Libs
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //appcompat
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+
+    //tests
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    testImplementation "org.assertj:assertj-core:$assertj_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation 'androidx.test:runner:1.1.1'
 }
