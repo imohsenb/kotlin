@@ -19,6 +19,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {enabled = true}
 }
 
 dependencies {
@@ -30,6 +32,10 @@ dependencies {
 
     //appcompat
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+
+    //lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     //dagger
     implementation "com.google.dagger:dagger:$dagger2_version"

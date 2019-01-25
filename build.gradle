@@ -29,6 +29,7 @@ ext {
     robolectric_version = "4.1"
     mockito_version     = "2.10.0"
     dagger2_version     = "2.16"
+    lifecycle_version     = "2.0.0"
 }
 
 
