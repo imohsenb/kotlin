@@ -11,7 +11,10 @@ import com.imohsenb.kotlin.BR
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(private val viewModelClass: Class<VM>) :
+abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(
+    private val viewModelClass: Class<VM>,
+    @LayoutRes val layoutRes: Int
+) :
     DaggerAppCompatActivity() {
 
     @Inject
@@ -23,7 +26,7 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(private val vi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //create data binding view
-        binding = DataBindingUtil.setContentView(this, getResLayout())
+        binding = DataBindingUtil.setContentView(this, layoutRes)
         //provide view model
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(viewModelClass)
         //assign view model to viewModel data binding layout variable
@@ -31,10 +34,4 @@ abstract class BaseActivity<VB : ViewDataBinding, VM : ViewModel>(private val vi
         //execute binding changes
         binding.executePendingBindings()
     }
-
-    /**
-     * Get Activity layout resource for creating content view.
-     */
-    @LayoutRes
-    abstract fun getResLayout(): Int
 }

@@ -4,7 +4,6 @@ import com.imohsenb.kotlin.R
 import com.imohsenb.kotlin.databinding.ActivityMainBinding
 import com.imohsenb.kotlin.viewmodel.MainViewModel
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java) {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java, R.layout.activity_main) {
 
-    override fun getResLayout(): Int = R.layout.activity_main
 }
