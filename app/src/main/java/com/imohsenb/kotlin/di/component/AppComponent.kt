@@ -4,6 +4,7 @@ import android.app.Application
 import com.imohsenb.kotlin.KotlinApplication
 import com.imohsenb.kotlin.di.module.ActivityModule
 import com.imohsenb.kotlin.di.module.AppModule
+import com.imohsenb.kotlin.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -15,7 +16,8 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         AppModule::class,
-        ActivityModule::class
+        ActivityModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent : AndroidInjector<KotlinApplication> {

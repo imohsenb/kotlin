@@ -3,15 +3,20 @@ package com.imohsenb.kotlin.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
+import javax.inject.Provider
 
-class ViewModelFactory @Inject constructor() : ViewModelProvider.Factory {
+class ViewModelFactory
+    @Inject
+    constructor(private val viewModelMap: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
+    ViewModelProvider.Factory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return MainViewModel() as T
+        viewModelMap.let {
+            it[modelClass]?.get()?.let { viewModel ->
+                return viewModel as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel type")
         }
-        throw IllegalArgumentException("Unknown ViewModel type")
     }
 }
