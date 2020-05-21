@@ -12,18 +12,8 @@ class ImgurGalleryRepository @Inject constructor(
 ) : GalleryRepository {
 
     override fun getGallery(): Observable<ResourceModel<List<GalleryModel>>> {
-        return Observable.create { emitter ->
-            emitter.onNext(ResourceModel.loading())
+        return ResourceModel.convert(
             galleryApi.get().compose(imgurGalleryResponseTransformer())
-                .subscribe { data, throwable ->
-                    data?.let {
-                        emitter.onNext(ResourceModel.success(data))
-                    }
-                    throwable?.let {
-                        emitter.onNext(ResourceModel.failed(it.message))
-                    }
-                    emitter.onComplete()
-                }
-        }
+        )
     }
 }
