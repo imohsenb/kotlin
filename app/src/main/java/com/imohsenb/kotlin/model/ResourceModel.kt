@@ -1,7 +1,8 @@
 package com.imohsenb.kotlin.model
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import kotlinx.coroutines.Dispatchers
 
 data class ResourceModel<out T>(
     val data: T? = null,
@@ -17,20 +18,13 @@ data class ResourceModel<out T>(
         fun <T> success(data: T): ResourceModel<T> =
             ResourceModel(data = data, state = State.SUCCESS)
 
-        /**
-         * Convert Single to Resource Observable
-         */
-        fun <T> convert(single: Single<T>): Observable<ResourceModel<T>> {
-            return Observable.create { emitter ->
-                emitter.onNext(ResourceModel.loading())
-                single.subscribe { data, throwable ->
-                    data?.let {
-                        emitter.onNext(ResourceModel.success(data))
-                    }
-                    throwable?.let {
-                        emitter.onNext(ResourceModel.failed(it.message))
-                    }
-                    emitter.onComplete()
+        fun <T> call(cb: suspend () -> T): LiveData<ResourceModel<T>> {
+            return liveData(Dispatchers.IO) {
+                emit(loading())
+                try {
+                    emit(success(cb()))
+                } catch (e: Exception) {
+                    emit(failed<T>(e.message))
                 }
             }
         }

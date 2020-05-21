@@ -1,7 +1,6 @@
 package com.imohsenb.kotlin.api.imgur
 
 import com.imohsenb.kotlin.model.GalleryModel
-import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -19,11 +18,11 @@ import retrofit2.http.Query
 interface ImgurGalleryApi {
 
     @GET("/3/gallery/{section}/{sort}/{window}/{page}")
-    fun get(
+    suspend fun get(
         @Path("section") section: String = "hot",
         @Path("sort") sort: String = "viral",
         @Path("page") page: Int = 0,
         @Path("window") window: String = "day",
         @Query("showViral") showViral: Boolean = true
-    ): Single<ImgurResponseModel<List<GalleryModel>>>
+    ): ImgurResponseModel<List<GalleryModel>>
 }

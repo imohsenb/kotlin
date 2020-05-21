@@ -1,10 +1,10 @@
 package com.imohsenb.kotlin.repository
 
+import androidx.lifecycle.LiveData
 import com.imohsenb.kotlin.model.GalleryModel
 import com.imohsenb.kotlin.model.ResourceModel
-import io.reactivex.Observable
 
 interface GalleryRepository {
 
-    fun getGallery(): Observable<ResourceModel<List<GalleryModel>>>
+    fun getGallery(): LiveData<ResourceModel<List<GalleryModel>>>
 }
