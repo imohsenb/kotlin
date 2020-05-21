@@ -6,4 +6,8 @@ import com.imohsenb.kotlin.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class.java, R.layout.activity_main) {
 
+    override fun onInitData(viewModel: MainViewModel) {
+        super.onInitData(viewModel)
+        viewModel.loadData()
+    }
 }

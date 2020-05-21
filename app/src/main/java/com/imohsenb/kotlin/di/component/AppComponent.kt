@@ -2,9 +2,7 @@ package com.imohsenb.kotlin.di.component
 
 import android.app.Application
 import com.imohsenb.kotlin.KotlinApplication
-import com.imohsenb.kotlin.di.module.ActivityModule
-import com.imohsenb.kotlin.di.module.AppModule
-import com.imohsenb.kotlin.di.module.ViewModelModule
+import com.imohsenb.kotlin.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,7 +15,9 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         ActivityModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        RepositoryModule::class,
+        ApiModule::class
     ]
 )
 interface AppComponent : AndroidInjector<KotlinApplication> {
