@@ -1,9 +1,10 @@
 package com.imohsenb.kotlin.repository
 
 import com.imohsenb.kotlin.model.GalleryModel
-import io.reactivex.Single
+import com.imohsenb.kotlin.model.ResourceModel
+import io.reactivex.Observable
 
 interface GalleryRepository {
 
-    fun getGallery(): Single<List<GalleryModel>>
+    fun getGallery(): Observable<ResourceModel<List<GalleryModel>>>
 }

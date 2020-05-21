@@ -1,31 +1,35 @@
-
 package com.imohsenb.kotlin.viewmodel
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.imohsenb.kotlin.model.GalleryModel
+import com.imohsenb.kotlin.model.State
 import com.imohsenb.kotlin.repository.GalleryRepository
-import com.imohsenb.kotlin.transformer.schedulersTransformer
+import com.imohsenb.kotlin.transformer.observableSchedulersTransformer
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val galleryRepository: GalleryRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
     val galleryList: MutableLiveData<List<GalleryModel>> by lazy {
-        MutableLiveData()
+        MutableLiveData<List<GalleryModel>>()
     }
 
     @SuppressLint("CheckResult")
     fun loadData() {
         galleryRepository.getGallery()
-            .compose(schedulersTransformer())
-            .subscribe { data, throwable ->
-                data?.let {
-                    galleryList.postValue(it)
+            .compose(observableSchedulersTransformer())
+            .subscribe({ res ->
+                when (res.state) {
+                    State.IN_PROGRESS -> toast("Loading...")
+                    State.FAILED -> toast(res.message)
+                    State.SUCCESS -> galleryList.postValue(res.data)
                 }
+
+            }, { throwable ->
                 throwable?.printStackTrace()
-            }
+            })
+
     }
 }
